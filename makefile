@@ -13,6 +13,6 @@ test: ;@echo "Test ${PROJECT}....."; \
 		npm run test
 
 configure: ;@echo "Configure ${PROJECT}....."; \
-		node index.js configure -r 127.0.0.1:6379 -e 1000 -c 10 -p 3000
+		node index.js configure -r 127.0.0.1:6379 -e 10 -c 10 -p 3000
 start: ;@echo "Starting ${PROJECT}....."; \
 		npm run start
