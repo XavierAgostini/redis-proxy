@@ -9,9 +9,21 @@ cache.get = util.promisify(cache.get)
 
 // load in config file
 const config = require('./config/config.json')
-console.log(config.port)
-const redisUrl = 'redis://127.0.0.1:6379'
-const client = redis.createClient(`redis://${config.redis}`)
+
+const redisUrl = `redis://${config.redis}`
+
+const client = redis.createClient(redisUrl, {
+  // if redis disconnects try reconnecting
+  retry_strategy: (options) => {
+    console.log('options', options)
+    return Math.min(options.attempt * 100 , 5000);
+  }
+})
+
+client.on('reconnecting', (message) => {
+  console.log('reconnecting')
+  console.log(message)
+})
 client.get = util.promisify(client.get)
 
 const app = express()
@@ -26,17 +38,21 @@ app.get('/stats', (req, res) => {
 })
 app.get('/:id', async (req, res) => {
   try {
+    console.log('try get ')
     // Get the key to look up in cache
     const id = req.params.id
     // check if key exists in local cache
     const cacheResult = await cache.get(id)
     if (cacheResult) {
       // return result of local cache
+      console.log('sent from local cache')
       return res.send({[id]: cacheResult})
     } 
     // check if key exists in Redis if not in local cache
     const redisResult = await client.get(id)
+
     if (redisResult) {
+      console.log('sent from redis')
       res.send({[id]: redisResult})
       // check if cache key limit has been reached
       // only cache key if within configured capacity
@@ -49,6 +65,8 @@ app.get('/:id', async (req, res) => {
       res.sendStatus(404)
     }    
   } catch (e) {
+    console.log('caught error')
+    console.log(e)
     res.status(400).send(e)
   }
 })
