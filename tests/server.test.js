@@ -13,22 +13,22 @@ const testKeys = {
 // need to seed redis with data
 Object.entries(testKeys).forEach(([key, value]) => redisClient.set(key, value))
 
-describe('GET /:id', () => {
+// describe('GET /:id', () => {
 
-  describe('should find keys', () => {
-    it('should find /test', (done) => {
-      request(app)
-        .get('/test')
-        .expect(200)
-        .expect((res) => {
-          // console.l?og('here')
-          console.log(res.body)
-          expect(res.body.test).toBe('Bob Dole')
-        })
-        .end(done)
-    })
-  })
-})
+//   describe('should find keys', () => {
+//     it('should find /test', (done) => {
+//       request(app)
+//         .get('/test')
+//         .expect(200)
+//         .expect((res) => {
+//           // console.l?og('here')
+//           console.log(res.body)
+//           expect(res.body.test).toBe('Bob Dole')
+//         })
+//         .end(done)
+//     })
+//   })
+// })
 
   // STILL need to look into concurrency
   

@@ -36,7 +36,6 @@ class Cache {
 
   // return an item from the cache
   get (key) {
-    console.log('get',key)
     if (this.hashSet[key]) {
       const now = new Date().getTime()
       if ((now - this.hashSet[key].createTime <= this.expiration)) {
@@ -44,7 +43,6 @@ class Cache {
         const node = new Node(key, value)
         this.remove(key)
         this.setHead(node)
-        console.log('get:', value)
         return value
       } else {
         this.remove(key)
@@ -54,7 +52,6 @@ class Cache {
 
   // add an item to the cache. overwrite if already exists
   set (key, value) {
-    console.log('set',key,value)
     const node = new Node(key, value)
     // if key already exists we will want to 
     if (this.hashSet[key]) {
