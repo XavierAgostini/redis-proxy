@@ -27,24 +27,16 @@ describe('GET /:id', () => {
       // })
       .end(done)
   })
-  // it('should find /color', (done) => {
-  //   request(app)
-  //     .get('/color')
-  //     .expect(200)
-  //     .expect((res) => {
-  //       expect(res.body.color).toBe('blue')
-  //     })
-  //     .end(done)
-  // })
-
-  // it('should not find /name', (done) => {
-  //   request(app)
-  //     .get('/test')
-  //     .expect(200)
-  //     .expect((res) => {
-  //       expect(res.body.result).toBe(1)
-  //     })
-  //     .end(done)
-  // })
+  
+  // should find existing key in redis
+    // key should get set in local cache
+    // key should expire after expiration time
+      // key should then be returned from redis
+  // sif capacity exceeded evict least used key
+  // should not return anything for non-existant redis key
+  // shouldn't return anything if redis goes down
+    // app shouldn't go down
+    // results from local cache should still return
+  // should be able to reconnect to redis if connection goes down and return a key
 })
 

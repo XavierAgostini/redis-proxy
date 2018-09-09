@@ -1,30 +1,26 @@
 const express = require('express')
 const redis = require('redis')
 const util = require('util')
-const NodeCache = require('node-cache')
+const {Cache} = require('./cache.js')
 const fs = require('fs')
-
-const cache = new NodeCache()
-cache.get = util.promisify(cache.get)
 
 // load in config file
 const config = require('./config/config.json')
 
 const redisUrl = `redis://${config.redis}`
 
+console.log(redisUrl)
 const client = redis.createClient(redisUrl, {
   // if redis disconnects try reconnecting
   retry_strategy: (options) => {
-    console.log('options', options)
+    // console.log('options', options)
     return Math.min(options.attempt * 100 , 5000);
   }
 })
 
-client.on('reconnecting', (message) => {
-  console.log('reconnecting')
-  console.log(message)
-})
 client.get = util.promisify(client.get)
+
+const cache = new Cache(config.capacity)
 
 const app = express()
 
@@ -32,8 +28,12 @@ app.get('/', (req, res) => {
   res.send('Redis Proxy Application')
 })
 
+app.get('/t', (req, res) => {
+  res.sendStatus(200)
+  var r = cache.s
+})
 app.get('/stats', (req, res) => {
-  const stats = cache.getStats()
+  const stats = cache.size()
   res.send(stats)
 })
 app.get('/:id', async (req, res) => {
@@ -43,7 +43,9 @@ app.get('/:id', async (req, res) => {
     const id = req.params.id
     // check if key exists in local cache
     const cacheResult = await cache.get(id)
+    console.log(`cacheResult: ${cacheResult}`)
     if (cacheResult) {
+
       // return result of local cache
       console.log('sent from local cache')
       return res.send({[id]: cacheResult})
@@ -56,8 +58,10 @@ app.get('/:id', async (req, res) => {
       res.send({[id]: redisResult})
       // check if cache key limit has been reached
       // only cache key if within configured capacity
-      const numKeys = cache.getStats().keys
-      if (numKeys < config.capacity) {
+
+      // STILL NEED TO ADD LRU eviction for least used key
+      
+      if (cache.size >= config.capacity) {
         cache.set(id, redisResult, config.expiration)
       }      
     } else {

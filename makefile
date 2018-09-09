@@ -10,7 +10,8 @@ clean: ;@echo "Cleaning ${PROJECT}....."; \
 		rm -rf config/*
 
 test: ;@echo "Test ${PROJECT}....."; \
-		npm run test
+	docker-compose up -d
+	
 
 configure: ;@echo "Configure ${PROJECT}....."; \
 		node index.js configure -r 127.0.0.1:6379 -e 10 -c 10 -p 3000
