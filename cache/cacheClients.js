@@ -17,7 +17,7 @@ const {Cache} = require('./lruCache')
 const url = `//${config.redisURL}:${config.redisPort}`
 
 console.log(url)
-const redisClient = redis.createClient('redis://redis:6379', {
+const redisClient = redis.createClient(url, {
   // if redis disconnects try reconnecting
   retry_strategy: (options) => {
     if (options.error && options.error.code === 'ECONNREFUSED' && options.attempt > 20) {
