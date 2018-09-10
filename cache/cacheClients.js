@@ -16,7 +16,7 @@ if (env === 'development') {
 const {Cache} = require('./lruCache')
 const url = `//${config.redisURL}:${config.redisPort}`
 
-console.log(url)
+// console.log(url)
 const redisClient = redis.createClient(url, {
   // if redis disconnects try reconnecting
   retry_strategy: (options) => {

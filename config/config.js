@@ -32,6 +32,11 @@ prompt.get([{
   if (err) {
     return console.log(err)
   }
+
+  if (result['Redis URL'] === '127.0.0.1' || result['Redis URL'] === 'localhost') {
+    result['Redis URL'] = 'docker.for.mac.localhost'
+  }
+  
   const serverConfig = {
     redisURL: result['Redis URL'],
     redisPort: result['Redis Port'],
@@ -39,6 +44,7 @@ prompt.get([{
     capacity: result['Capacity'],
     port: result['Port']
   }
+
   fs.writeFileSync('./.env', `server_port=${result['Port']}:${result['Port']}\nredis_port=${result['Redis Port']}:${result['Redis Port']}\nCOMMAND=npm start`)
   return fs.writeFileSync('config/config.json', JSON.stringify(serverConfig))
 })
