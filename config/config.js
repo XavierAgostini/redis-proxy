@@ -1,6 +1,5 @@
 const prompt = require('prompt')
 const fs = require('fs')
-
 prompt.start()
 
 prompt.get([{
@@ -35,3 +34,17 @@ prompt.get([{
   }
   return fs.writeFileSync('config/config.json', JSON.stringify(serverConfig))
 })
+
+
+
+
+
+// configEnv (configJSON) => {
+//   const envConfig = configJSON[env]
+//   Object.keys(envConfig).forEach((key) => {
+//     process.env[key] = envConfig[key]
+//   })
+// }
+
+
+  

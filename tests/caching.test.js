@@ -1,13 +1,8 @@
 const expect = require('expect')
 const {Cache} = require('./../cache/lruCache')
 
-const testKeys = {
-  name: 'Bob Dole',
-  age: '45',
-  city: 'San Francisco',
-  state: 'California',
-  country: 'United States of America'
-}
+const testKeys = require('./seed/seed.json')
+
 describe ('LRU Cache Tests', () => {
   let cache
 
@@ -26,12 +21,12 @@ describe ('LRU Cache Tests', () => {
     })
   })
 
-  it ('should add new key to cache when not at capacity', () => {
+  it('should add new key to cache when not at capacity', () => {
     cache.set('name', 'Bob Dole')
     expect(cache.get('name')).toEqual('Bob Dole')
   })
 
-  it ('should add a new key to cache when at capacity', () => {
+  it('should add a new key to cache when at capacity', () => {
     Object.entries(testKeys).forEach(([key, value]) => cache.set(key, value))
     expect(cache.size).toEqual(4)
     expect(cache.head.key).toEqual('country')
@@ -40,7 +35,7 @@ describe ('LRU Cache Tests', () => {
     expect(cache.get('country')).toEqual('United States of America')
   })
 
-  it ('should set key to head and tail if cache empty', () => {
+  it('should set key to head and tail if cache empty', () => {
     cache.set('name', 'Bob Dole')
     expect(cache.head.key).toEqual('name')
     expect(cache.tail.key).toEqual('name')
@@ -53,7 +48,7 @@ describe ('LRU Cache Tests', () => {
     expect(cache.get('age')).toEqual('50')
     expect(cache.head.key).toEqual('age')
   })
-
+ 
   it('should remove expired key', function (done)  {
     this.timeout(10000)
     cache.set('name', 'Bob Dole')
