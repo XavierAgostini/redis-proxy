@@ -59,3 +59,7 @@ Testing is broken up into 3 components:
 1. LRU Cache
 2. LRU cache and Redis cache working in tandem
 3. HTTP proxy service
+
+## Omitted
+1. Concurrency -> could have added node clusters to handle concurrent requests
+2. Proxy can't connect to any redis server using the docker container. Wasn't sure if there was an issue with setting up the Docker networking, or the node redis client
