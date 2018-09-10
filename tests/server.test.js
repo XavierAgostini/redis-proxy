@@ -26,7 +26,7 @@ describe('GET /:id', () => {
         .get('/age')
         .expect(200)
         .expect((res) => {
-          expect(res.body.age).toBe(45)
+          expect(res.body.age).toBe("45")
         })
         .end(done)
     })

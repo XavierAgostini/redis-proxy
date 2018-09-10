@@ -1,12 +1,7 @@
 const express = require('express')
 
-const {cache} = require('./cache/lruCache.js')
-
-// load in config file
-const config = require('./config/config.json')
-
 // load in caching client
-const {cacheGet} = require('./cache/cacheClients')
+const {cacheGet, config} = require('./cache/cacheClients')
 
 const app = express()
 
@@ -18,7 +13,6 @@ app.get('/:id', async (req, res) => {
   try {
     const id = req.params.id
     const result = await cacheGet(id)
-    console.log('result',result)
     res.send({[id]: result})   
   } catch (e) {
     if (e.message === 'NO_RESULT') {

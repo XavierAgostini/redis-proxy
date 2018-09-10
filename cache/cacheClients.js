@@ -13,9 +13,8 @@ if (env === 'development') {
 
 // console.log(config)
 const {Cache} = require('./lruCache')
-const redisUrl = `redis://${config.redis}`
-
-const redisClient = redis.createClient(redisUrl, {
+const url = `//${config.redisURL}:${config.redisPort}`
+const redisClient = redis.createClient(url, {
   // if redis disconnects try reconnecting
   retry_strategy: (options) => {
     if (options.error && options.error.code === 'ECONNREFUSED' && options.attempt > 20) {
@@ -55,4 +54,4 @@ const cacheGet = async (key) => {
   }  
 }
 // exporting redis and local cache clients for testing purposes
-module.exports = { redisClient, cacheClient, cacheGet }
+module.exports = { redisClient, cacheClient, cacheGet, config }

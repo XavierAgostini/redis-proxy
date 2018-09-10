@@ -1,13 +1,19 @@
 const prompt = require('prompt')
 const fs = require('fs')
+
 prompt.start()
 
 prompt.get([{
-  name: 'Redis Address',
-  description: 'Address of the backing Redis server',
+  name: 'Redis Port',
+  description: 'TCP port of the backing Redis (Only if explicitly needed)',
+  type: 'integer',
+  required: false
+},{
+  name: 'Redis URL',
+  description: 'URL of the backing Redis server',
   type: 'string',
   required: true
-}, {
+},{
   name: 'Expiration',
   description: 'Cache expiry time in ms',
   type: 'integer',
@@ -27,11 +33,13 @@ prompt.get([{
     return console.log(err)
   }
   const serverConfig = {
-    redis: result['Redis Address'],
+    redisURL: result['Redis URL'],
+    redisPort: result['Redis Port'],
     expiration: result['Expiration'],
     capacity: result['Capacity'],
     port: result['Port']
   }
+  fs.writeFileSync('./.env', `server_port=${result['Port']}:${result['Port']}\nredis_port=${result['Redis Port']}:${result['Redis Port']}\nCOMMAND=npm start`)
   return fs.writeFileSync('config/config.json', JSON.stringify(serverConfig))
 })
 

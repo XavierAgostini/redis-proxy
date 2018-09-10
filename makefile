@@ -3,17 +3,27 @@ PROJECT = "Redis Proxy Server"
 all: clean install configure test start
 
 install: ;@echo "Installing ${PROJECT}....."; \
-			npm install
+	npm install
 
 clean: ;@echo "Cleaning ${PROJECT}....."; \
-		rm -rf node_modules \
-		rm -rf config/*
+	rm -rf node_modules
+
+build: ;@echo "Building ${PROJECT}....."; \
+	npm install
 
 test: ;@echo "Test ${PROJECT}....."; \
-	docker-compose up -d
+	export PORT=5000:5000
+	export COMMAND="npm test"
+	make clean
+	make build
+	docker-compose build
+	docker-compose up
 	
-
-configure: ;@echo "Configure ${PROJECT}....."; \
-		node index.js configure -r 127.0.0.1:6379 -e 10 -c 10 -p 3000
 start: ;@echo "Starting ${PROJECT}....."; \
-		npm run start
+	make build
+	node config/config.js
+	docker-compose build
+	docker-compose up -d
+	docker-compose down
+	docker-compose server
+	docker stop

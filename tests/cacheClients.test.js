@@ -30,8 +30,8 @@ describe ('Test retrieving values from local and redis cache', () => {
     expect(cacheClient.get('testKey')).toEqual('testValue')
   })
 
-  it('should set key in local if found in redis', async () => {
-    expect(cacheClient.get('age')).toEqual(45)
+  it('should set key in local if found in redis', () => {
+    expect(cacheClient.get('age')).toEqual("45")
     expect(cacheClient.get('city')).toEqual('San Francisco')
     expect(cacheClient.get('state')).toEqual('California')
     expect(cacheClient.get('country')).toEqual('United States of America')
@@ -47,7 +47,7 @@ describe ('Test retrieving values from local and redis cache', () => {
 
   it('should replace key if it exists and set updated key to head', async () => {
     expect(cacheClient.tail.key).toEqual('age')
-    expect(await cacheGet('age')).toEqual(45)
+    expect(await cacheGet('age')).toEqual("45")
     expect(cacheClient.tail.key).toEqual('city')
     expect(cacheClient.head.key).toEqual('age')
   })

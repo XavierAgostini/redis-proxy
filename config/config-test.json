@@ -1,1 +1,1 @@
-{"redis":"redis:6379","expiration":10,"capacity":1,"port":5000}
+{"redisPort": "6379","redisURL":"0.0.0.0","expiration":5000,"capacity":4,"port":5000}
