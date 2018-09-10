@@ -16,14 +16,11 @@ test: ;@echo "Test ${PROJECT}....."; \
 	export COMMAND="npm test"
 	make clean
 	make build
-	docker-compose build
 	docker-compose up
 	
 start: ;@echo "Starting ${PROJECT}....."; \
 	make build
-	node config/config.js
+	#node config/config.js
 	docker-compose build
 	docker-compose up -d
-	docker-compose down
-	docker-compose server
-	docker stop
+	docker-compose stop redis

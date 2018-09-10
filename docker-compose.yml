@@ -5,7 +5,6 @@ services:
     command: $COMMAND
     ports:
     - $server_port
-    - $redis_port
     depends_on:
     - redis
   redis:
