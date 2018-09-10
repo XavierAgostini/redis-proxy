@@ -1,1 +1,1 @@
-{"redisURL":"docker.for.mac.localhost","redisPort":6380,"expiration":2000,"capacity":5,"port":5000}
+{"redisURL":"docker.for.mac.localhost","redisPort":6379,"expiration":10000,"capacity":4,"port":5000}

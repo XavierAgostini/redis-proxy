@@ -6,3 +6,11 @@ services:
     hostname: 127.0.0.1
     ports:
     - $server_port
+    depends_on:
+    - redis
+  redis:
+    image: redis:3.2.0
+    ports:
+      - "6379:6379"
+  
+

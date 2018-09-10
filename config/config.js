@@ -9,8 +9,8 @@ prompt.get([{
   type: 'integer',
   required: false
 },{
-  name: 'Redis URL',
-  description: 'URL of the backing Redis server',
+  name: 'Redis Host',
+  description: 'Host address of the backing Redis server',
   type: 'string',
   required: true
 },{
@@ -25,7 +25,7 @@ prompt.get([{
   required: true
 }, {
   name: 'Port',
-  description: 'TCP/IP port port number the proxy should listen',
+  description: 'The localhost TCP/IP port number the proxy should listen on',
   type: 'integer',
   required: true
 }], (err, result) => {
@@ -33,12 +33,12 @@ prompt.get([{
     return console.log(err)
   }
 
-  if (result['Redis URL'] === '127.0.0.1' || result['Redis URL'] === 'localhost') {
-    result['Redis URL'] = 'docker.for.mac.localhost'
+  if (result['Redis Host'] === '127.0.0.1' || result['Redis Host'] === 'localhost') {
+    result['Redis Host'] = 'docker.for.mac.localhost'
   }
   
   const serverConfig = {
-    redisURL: result['Redis URL'],
+    redisURL: result['Redis Host'],
     redisPort: result['Redis Port'],
     expiration: result['Expiration'],
     capacity: result['Capacity'],

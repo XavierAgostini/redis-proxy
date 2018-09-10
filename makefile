@@ -13,11 +13,10 @@ test: ;@echo "Test ${PROJECT}....."; \
 	make clean
 	make build
 	node config/config-test.js
-	docker-compose up
+	docker-compose -f docker-compose.test.yml up
 	
 start: ;@echo "Starting ${PROJECT}....."; \
 	# make build
 	node config/config.js
-	docker-compose build
-	docker-compose up
-	docker-compose stop redis
+	docker-compose -f docker-compose.yml build
+	docker-compose -f docker-compose.yml up -d
