@@ -4,15 +4,15 @@ const fs = require('fs')
 prompt.start()
 
 prompt.get([{
-  name: 'Redis Port',
-  description: 'TCP port of the backing Redis (Only if explicitly needed)',
-  type: 'integer',
-  required: false
-},{
   name: 'Redis Host',
   description: 'Host address of the backing Redis server',
   type: 'string',
   required: true
+}, {
+  name: 'Redis Port',
+  description: 'TCP port of the backing Redis (Only if explicitly needed)',
+  type: 'integer',
+  required: false
 },{
   name: 'Expiration',
   description: 'Cache expiry time in ms',
@@ -38,7 +38,7 @@ prompt.get([{
   }
   
   const serverConfig = {
-    redisURL: result['Redis Host'],
+    redisHost: result['Redis Host'],
     redisPort: result['Redis Port'],
     expiration: result['Expiration'],
     capacity: result['Capacity'],

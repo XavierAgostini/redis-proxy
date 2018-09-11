@@ -14,15 +14,16 @@ if (env === 'development') {
 
 // console.log(config)
 const {Cache} = require('./lruCache')
-const url = `//${config.redisURL}:${config.redisPort}`
-
+const url = `//${config.redisHost}:${config.redisPort}`
+console.log('config',config)
+console.log('url',url)
 // console.log(url)
 const redisClient = redis.createClient(url, {
   // if redis disconnects try reconnecting
+  enable_offline_queue : false,
   retry_strategy: (options) => {
-    if (options.error && options.error.code === 'ECONNREFUSED' && options.attempt > 20) {
-      // return new Error('server down')
-
+    if (options.error && options.error.code === 'ECONNREFUSED' && options.attempt > 100) {
+      return new Error('server down')
     }
     return Math.min(options.attempt * 200 , 5000);
   }

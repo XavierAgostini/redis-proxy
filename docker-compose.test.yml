@@ -3,7 +3,6 @@ services:
   server:
     build: .
     command: $COMMAND
-    hostname: 127.0.0.1
     ports:
     - $server_port
     depends_on:
