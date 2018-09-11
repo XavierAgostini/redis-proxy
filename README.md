@@ -2,11 +2,11 @@
 
 ## Getting Started:
 1. ```git clone https://github.com/XavierAgostini/redis-proxy.git```
-2. ```make test```
-3. ```make start```
+2. ```make test``` (will run test suite)
+3. ```make``` (will start the redis-proxy)
 4. You will then be prompted to enter your desired configuration options.
-  - Redis server port (optional)
   - Redis host address (required)
+  - Redis server port (optional)
   - Local cache capacity (required)
   - Local cache key expiration in ms (required)
   - Localhost port you wish to run the server on (required)
@@ -54,10 +54,10 @@ The actual proxy server is run through an express.js server. It is configured wi
 The LRU cache is implemented using LRU algorithm a doubly-linked list. A simple hashmap could be used to store and retrieve key-value pairs, but it would not support LRU functionality. To support this functionality I used a combination of a hash map and linked list built using ES6 classes; Node and Cache:
 
 ### Node
-The Node Class:
 Parameters:
   - key
   - value
+  
 Properties:
   - key
   - value
@@ -69,6 +69,7 @@ Properties:
 Parameters:
   - capacity: the max number of keys that be cached
   - expiration: the time to live (TTL) keys have
+  
 Properties:
   - capacity
   - expiration
