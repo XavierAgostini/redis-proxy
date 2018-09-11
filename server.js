@@ -15,10 +15,11 @@ app.get('/:id', async (req, res) => {
     const result = await cacheGet(id)
     res.send({[id]: result})   
   } catch (e) {
+    console.error(e)
     if (e.message === 'NO_RESULT') {
-      return res.sendStatus(404)
+      return res.status(404).send('No value was found for that key')
     }
-    res.status(400).send('Oops looks like the Redis server disconnected. Please ensure your Redis server is running. Refresh the page to try again.')
+    res.status(500).send('Oops looks like the Redis server disconnected. Please ensure your Redis server is running. Refresh the page to try again.')
   }
 })
 
