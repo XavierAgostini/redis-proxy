@@ -6,7 +6,6 @@ install: ;@echo "Installing ${PROJECT}....."; \
 
 clean: ;@echo "Cleaning ${PROJECT}....."; \
 	rm -rf node_modules
-	rm .env
 	
 build: ;@echo "Building ${PROJECT}....."; \
 	npm install
@@ -14,7 +13,7 @@ build: ;@echo "Building ${PROJECT}....."; \
 test: ;@echo "Test ${PROJECT}....."; \
 	make clean
 	make build
-	node config/config-test.js
+	# node config/config-test.js
 	docker-compose -f docker-compose.test.yml build
 	docker-compose -f docker-compose.test.yml up
 	
