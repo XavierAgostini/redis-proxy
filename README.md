@@ -77,7 +77,14 @@ Properties:
   - hashSet: a hashmap containing the linked list nodes
   - head: the head node of the linked list
   - tail: the tail node of the linked list
-  
+
+Methods:
+  - get(key): retrieves a value from the cache
+  - set(key, value): adds a key to the cache
+  - setHead(node): adds a node to the head of the list
+  - get(key): retrieves a value from the cache
+  - remove(key): removes a key from the cache
+
 ### How it works
 The LRU cache is initialized with the user defined capacity and key expiration and in a empty state. Keys are added to a hash map where each key is associated with a node in a linked list. As keys are added to the cache, they are added to the head of the list. Key-value paris are retrieved from cache by accessing the node-value assoicated with hash map key. The list is arranged from head to tail in order of most recently used key. The most recently accessed key is at the head, while the least recently used key is at the tail. If the cache gets to capacity the tail node is removed to make room for the new key. If an existing key is accessed, the list is updated to remove the associate node from its posistion in the list, and add it to the head. To support key expiration each node has a `createTime` property that denotes when the key was added to the cache. When keys are accessed in the cache, the algorithm checks if the key has exceeded the expiration time. If it has its removed from the list. Initially thought to add a timer function to each node to automatically remove the node from the list when it expired. But this seemed like it would be quite complex to implement especially when keys are expiring within milliseconds of one another. This implemenation allows keys to be set and retrivied with O(1) time complexity.
 
