@@ -98,3 +98,15 @@ Unit tests are performed on each component to ensure they each work as expected.
 
 ## Omitted
 1. Concurrency: the express server has built in concurrency thanks to node, but the redis client could have been configured to use concurrency by using  [client.multi()](https://github.com/NodeRedis/node_redis/#clientmulticommands). Also didn't check into how the LRU cache would handle concurrent requests. I think I would need to add a queue to batch the requests until they can all be executed to ensure concurrent requests do not break the cache.
+
+## Time Spent
+- Documenation: 1 hour
+- LRU implementation: 2 hours
+- Redis caching: 0.5 hours
+- User defined configurations: 2 hours
+- Test suite: 3 hours
+- Single click build: 3 hours
+  - took a while to figure out how to dynamically configure build components
+- Docker: 10 hours
+  - time spent mostly on learning how to dynamically configure docker containers and networking with external Redis servers
+- Total: 21.5 hours
